@@ -1,0 +1,44 @@
+{
+  "name": "ps2",
+  "private": true,
+  "engines": {
+    "node": "^18.0.x"
+  },
+  "scripts": {
+    "compile": "tsc",
+    "lint": "tsc && npx eslint . --ext .ts",
+    "test": "tsc && npx eslint . --ext .ts ; npx mocha --require source-map-support/register dist/src dist/test",
+    "coverage": "npx nyc npm test"
+  },
+  "mocha": {
+    "reporter": "spec",
+    "exit": true
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "exclude": [
+      "coverage/",
+      ".eslintrc.js"
+    ],
+    "reporter": [
+      "text",
+      "html"
+    ],
+    "all": true
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.11.18",
+    "@typescript-eslint/eslint-plugin": "^5.50.0",
+    "@typescript-eslint/parser": "^5.50.0",
+    "eslint": "^8.33.0",
+    "eslint-plugin-jsdoc": "^39.7.5",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "source-map-support": "^0.5.21",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  }
+}

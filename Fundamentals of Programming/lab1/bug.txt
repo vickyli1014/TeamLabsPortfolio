@@ -1,0 +1,150 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.7.6, pytest-5.3.5, py-1.8.1, pluggy-0.13.1
+rootdir: /Users/vli/Downloads/lab1
+plugins: hypothesis-5.5.4, arraydiff-0.3, remotedata-0.3.2, openfiles-0.4.0, doctestplus-0.5.0, astropy-header-0.1.2
+collected 30 items / 25 deselected / 5 selected
+
+test.py 
+ This is le index 110
+
+ The size:  0
+FFFFF
+
+=================================== FAILURES ===================================
+_______________________________ test_inverted_1 ________________________________
+
+    def test_inverted_1():
+        im = lab.load_image(os.path.join(TEST_DIRECTORY, 'test_images', 'centered_pixel.png'))
+>       result = lab.inverted(im)
+
+test.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+lab.py:40: in inverted
+    return apply_per_pixel(image, lambda c: 256-c)
+lab.py:35: in apply_per_pixel
+    set_pixel(result, x, y, newcolor)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image = {'height': 11, 'pixels': [], 'width': 11}, x = 0, y = 10, c = 256
+
+    def set_pixel(image, x, y, c):
+    	if (c > 256):
+    		c = 255
+    	if (c < 0):
+    		c = 0
+    	print("\n This is le index", y*image["width"]+x)
+    	print("\n The size: ", len(image['pixels']))
+>   	print("Current color: ", image['pixels'][y * image['width'] + x])
+E    IndexError: list index out of range
+
+lab.py:21: IndexError
+_______________________________ test_inverted_2 ________________________________
+
+    def test_inverted_2():
+        im = {
+            "height": 1,
+            "width": 4,
+            "pixels": [11, 78, 147, 209],
+        }
+>       result = lab.inverted(im);
+
+test.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+lab.py:40: in inverted
+    return apply_per_pixel(image, lambda c: 256-c)
+lab.py:33: in apply_per_pixel
+    color = get_pixel(image, x, y)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image = {'height': 1, 'pixels': [11, 78, 147, 209], 'width': 4}, x = 0, y = 1
+
+    def get_pixel(image, x, y):
+>       return image['pixels'][y * image['width'] + x]
+E       IndexError: list index out of range
+
+lab.py:11: IndexError
+________________________ test_inverted_images[mushroom] ________________________
+
+fname = 'mushroom'
+
+    @pytest.mark.parametrize("fname", ['mushroom', 'twocats', 'chess'])
+    def test_inverted_images(fname):
+        inpfile = os.path.join(TEST_DIRECTORY, 'test_images', '%s.png' % fname)
+        expfile = os.path.join(TEST_DIRECTORY, 'test_results', '%s_invert.png' % fname)
+        im = lab.load_image(inpfile)
+        oim = object_hash(im)
+>       result = lab.inverted(im)
+
+test.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+lab.py:40: in inverted
+    return apply_per_pixel(image, lambda c: 256-c)
+lab.py:33: in apply_per_pixel
+    color = get_pixel(image, x, y)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image = {'height': 188, 'pixels': [2, 2, 2, 2, 3, 3, ...], 'width': 300}, x = 0
+y = 188
+
+    def get_pixel(image, x, y):
+>       return image['pixels'][y * image['width'] + x]
+E       IndexError: list index out of range
+
+lab.py:11: IndexError
+________________________ test_inverted_images[twocats] _________________________
+
+fname = 'twocats'
+
+    @pytest.mark.parametrize("fname", ['mushroom', 'twocats', 'chess'])
+    def test_inverted_images(fname):
+        inpfile = os.path.join(TEST_DIRECTORY, 'test_images', '%s.png' % fname)
+        expfile = os.path.join(TEST_DIRECTORY, 'test_results', '%s_invert.png' % fname)
+        im = lab.load_image(inpfile)
+        oim = object_hash(im)
+>       result = lab.inverted(im)
+
+test.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+lab.py:40: in inverted
+    return apply_per_pixel(image, lambda c: 256-c)
+lab.py:33: in apply_per_pixel
+    color = get_pixel(image, x, y)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image = {'height': 200, 'pixels': [133, 134, 135, 135, 135, 135, ...], 'width': 300}
+x = 0, y = 200
+
+    def get_pixel(image, x, y):
+>       return image['pixels'][y * image['width'] + x]
+E       IndexError: list index out of range
+
+lab.py:11: IndexError
+_________________________ test_inverted_images[chess] __________________________
+
+fname = 'chess'
+
+    @pytest.mark.parametrize("fname", ['mushroom', 'twocats', 'chess'])
+    def test_inverted_images(fname):
+        inpfile = os.path.join(TEST_DIRECTORY, 'test_images', '%s.png' % fname)
+        expfile = os.path.join(TEST_DIRECTORY, 'test_results', '%s_invert.png' % fname)
+        im = lab.load_image(inpfile)
+        oim = object_hash(im)
+>       result = lab.inverted(im)
+
+test.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+lab.py:40: in inverted
+    return apply_per_pixel(image, lambda c: 256-c)
+lab.py:33: in apply_per_pixel
+    color = get_pixel(image, x, y)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image = {'height': 200, 'pixels': [93, 99, 99, 102, 107, 109, ...], 'width': 300}
+x = 0, y = 200
+
+    def get_pixel(image, x, y):
+>       return image['pixels'][y * image['width'] + x]
+E       IndexError: list index out of range
+
+lab.py:11: IndexError
+======================= 5 failed, 25 deselected in 0.17s =======================

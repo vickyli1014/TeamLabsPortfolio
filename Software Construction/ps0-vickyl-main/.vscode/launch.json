@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "command": "npm start",
+            "name": "Run npm start (runs turtlesoup.ts)",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+        {
+            "command": "npm test",
+            "name": "Run npm test (runs tests in test/)",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+    ]
+}

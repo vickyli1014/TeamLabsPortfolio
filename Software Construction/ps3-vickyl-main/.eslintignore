@@ -1,0 +1,9 @@
+node_modules
+dist
+coverage
+test
+src/examples.ts
+src/image-library.ts
+src/main.ts
+src/web-client.ts
+src/web-server.ts

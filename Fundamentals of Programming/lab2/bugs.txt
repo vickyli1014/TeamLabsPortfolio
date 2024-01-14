@@ -1,0 +1,704 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.7.6, pytest-5.3.5, py-1.8.1, pluggy-0.13.1
+rootdir: /Users/vli/Downloads/lab2
+plugins: hypothesis-5.5.4, arraydiff-0.3, remotedata-0.3.2, openfiles-0.4.0, doctestplus-0.5.0, astropy-header-0.1.2
+collected 29 items
+
+test.py .FFFFFFFFFFFFFFFFFFFFFFFFFFFF                                    [100%]
+
+=================================== FAILURES ===================================
+__________________________ test_color_filter_inverted __________________________
+
+    def test_color_filter_inverted():
+        im = lab.load_color_image('test_images/centered_pixel.png')
+        color_inverted = lab.color_filter_from_greyscale_filter(lab.inverted)
+        assert callable(color_inverted), 'color_filter_from_greyscale_filter should return a function.'
+>       result = color_inverted(im)
+
+test.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+lab.py:43: in apply_filter
+    red = filt(red)
+lab.py:182: in inverted
+    return apply_per_pixel(image, lambda c: 255-c)
+lab.py:177: in apply_per_pixel
+    set_pixel(result, x, y, newcolor)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image = {'height': 11, 'pixels': (244, 244, 244, 244, 244, 244, ...), 'width': 11}
+x = 0, y = 0, c = 11
+
+    def set_pixel(image, x, y, c):
+        """
+        Sets the value of pixel at x, y to c
+        """
+>       image['pixels'][y * image['width'] + x] = c
+E       TypeError: 'tuple' object does not support item assignment
+
+lab.py:162: TypeError
+___________________________ test_color_filter_edges ____________________________
+
+    def test_color_filter_edges():
+        im = lab.load_color_image('test_images/centered_pixel.png')
+        color_edges = lab.color_filter_from_greyscale_filter(lab.edges)
+        assert callable(color_edges), 'color_filter_from_greyscale_filter should return a function.'
+>       result = color_edges(im)
+
+test.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+lab.py:43: in apply_filter
+    red = filt(red)
+lab.py:306: in edges
+    newImage1 = correlate(image, kernelX)
+lab.py:221: in correlate
+    set_pixel(newImage, x, y, sum(newPixels))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image = {'height': 11, 'pixels': (244, 244, 244, 244, 244, 244, ...), 'width': 11}
+x = 0, y = 0, c = 0
+
+    def set_pixel(image, x, y, c):
+        """
+        Sets the value of pixel at x, y to c
+        """
+>       image['pixels'][y * image['width'] + x] = c
+E       TypeError: 'tuple' object does not support item assignment
+
+lab.py:162: TypeError
+_________________ test_color_filter_images[filter_info0-frog] __________________
+
+fname = 'frog', filter_info = (<function edges at 0x7fcacb3b2680>, 'edges')
+
+    @pytest.mark.parametrize("fname", ['frog', 'tree'])
+    @pytest.mark.parametrize("filter_info", [(lab.edges, 'edges'), (lab.inverted, 'inverted')])
+    def test_color_filter_images(fname, filter_info):
+        filt, filt_name = filter_info
+        inpfile = os.path.join(TEST_DIRECTORY, 'test_images', f'{fname}.png')
+        expfile = os.path.join(TEST_DIRECTORY, 'test_results', f'{fname}_{filt_name}.png')
+        im = lab.load_color_image(inpfile)
+        oim = object_hash(im)
+        color_filter = lab.color_filter_from_greyscale_filter(filt)
+        assert callable(color_filter), 'color_filter_from_greyscale_filter should return a function.'
+>       result = color_filter(im)
+
+test.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+lab.py:43: in apply_filter
+    red = filt(red)
+lab.py:306: in edges
+    newImage1 = correlate(image, kernelX)
+lab.py:221: in correlate
+    set_pixel(newImage, x, y, sum(newPixels))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image = {'height': 225, 'pixels': (152, 154, 158, 163, 164, 162, ...), 'width': 300}
+x = 0, y = 0, c = 8
+
+    def set_pixel(image, x, y, c):
+        """
+        Sets the value of pixel at x, y to c
+        """
+>       image['pixels'][y * image['width'] + x] = c
+E       TypeError: 'tuple' object does not support item assignment
+
+lab.py:162: TypeError
+_________________ test_color_filter_images[filter_info0-tree] __________________
+
+fname = 'tree', filter_info = (<function edges at 0x7fcacb3b2680>, 'edges')
+
+    @pytest.mark.parametrize("fname", ['frog', 'tree'])
+    @pytest.mark.parametrize("filter_info", [(lab.edges, 'edges'), (lab.inverted, 'inverted')])
+    def test_color_filter_images(fname, filter_info):
+        filt, filt_name = filter_info
+        inpfile = os.path.join(TEST_DIRECTORY, 'test_images', f'{fname}.png')
+        expfile = os.path.join(TEST_DIRECTORY, 'test_results', f'{fname}_{filt_name}.png')
+        im = lab.load_color_image(inpfile)
+        oim = object_hash(im)
+        color_filter = lab.color_filter_from_greyscale_filter(filt)
+        assert callable(color_filter), 'color_filter_from_greyscale_filter should return a function.'
+>       result = color_filter(im)
+
+test.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+lab.py:43: in apply_filter
+    red = filt(red)
+lab.py:306: in edges
+    newImage1 = correlate(image, kernelX)
+lab.py:221: in correlate
+    set_pixel(newImage, x, y, sum(newPixels))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image = {'height': 199, 'pixels': (97, 97, 98, 99, 100, 100, ...), 'width': 300}
+x = 0, y = 0, c = 0
+
+    def set_pixel(image, x, y, c):
+        """
+        Sets the value of pixel at x, y to c
+        """
+>       image['pixels'][y * image['width'] + x] = c
+E       TypeError: 'tuple' object does not support item assignment
+
+lab.py:162: TypeError
+_________________ test_color_filter_images[filter_info1-frog] __________________
+
+fname = 'frog'
+filter_info = (<function inverted at 0x7fcacb3b2320>, 'inverted')
+
+    @pytest.mark.parametrize("fname", ['frog', 'tree'])
+    @pytest.mark.parametrize("filter_info", [(lab.edges, 'edges'), (lab.inverted, 'inverted')])
+    def test_color_filter_images(fname, filter_info):
+        filt, filt_name = filter_info
+        inpfile = os.path.join(TEST_DIRECTORY, 'test_images', f'{fname}.png')
+        expfile = os.path.join(TEST_DIRECTORY, 'test_results', f'{fname}_{filt_name}.png')
+        im = lab.load_color_image(inpfile)
+        oim = object_hash(im)
+        color_filter = lab.color_filter_from_greyscale_filter(filt)
+        assert callable(color_filter), 'color_filter_from_greyscale_filter should return a function.'
+>       result = color_filter(im)
+
+test.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+lab.py:43: in apply_filter
+    red = filt(red)
+lab.py:182: in inverted
+    return apply_per_pixel(image, lambda c: 255-c)
+lab.py:177: in apply_per_pixel
+    set_pixel(result, x, y, newcolor)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image = {'height': 225, 'pixels': (152, 154, 158, 163, 164, 162, ...), 'width': 300}
+x = 0, y = 0, c = 103
+
+    def set_pixel(image, x, y, c):
+        """
+        Sets the value of pixel at x, y to c
+        """
+>       image['pixels'][y * image['width'] + x] = c
+E       TypeError: 'tuple' object does not support item assignment
+
+lab.py:162: TypeError
+_________________ test_color_filter_images[filter_info1-tree] __________________
+
+fname = 'tree'
+filter_info = (<function inverted at 0x7fcacb3b2320>, 'inverted')
+
+    @pytest.mark.parametrize("fname", ['frog', 'tree'])
+    @pytest.mark.parametrize("filter_info", [(lab.edges, 'edges'), (lab.inverted, 'inverted')])
+    def test_color_filter_images(fname, filter_info):
+        filt, filt_name = filter_info
+        inpfile = os.path.join(TEST_DIRECTORY, 'test_images', f'{fname}.png')
+        expfile = os.path.join(TEST_DIRECTORY, 'test_results', f'{fname}_{filt_name}.png')
+        im = lab.load_color_image(inpfile)
+        oim = object_hash(im)
+        color_filter = lab.color_filter_from_greyscale_filter(filt)
+        assert callable(color_filter), 'color_filter_from_greyscale_filter should return a function.'
+>       result = color_filter(im)
+
+test.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+lab.py:43: in apply_filter
+    red = filt(red)
+lab.py:182: in inverted
+    return apply_per_pixel(image, lambda c: 255-c)
+lab.py:177: in apply_per_pixel
+    set_pixel(result, x, y, newcolor)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image = {'height': 199, 'pixels': (97, 97, 98, 99, 100, 100, ...), 'width': 300}
+x = 0, y = 0, c = 158
+
+    def set_pixel(image, x, y, c):
+        """
+        Sets the value of pixel at x, y to c
+        """
+>       image['pixels'][y * image['width'] + x] = c
+E       TypeError: 'tuple' object does not support item assignment
+
+lab.py:162: TypeError
+_______________________________ test_blur_filter _______________________________
+
+    def test_blur_filter():
+>       blur_filter = lab.make_blur_filter(3)
+
+test.py:125: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 3
+
+    def make_blur_filter(n):
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:61: NotImplementedError
+________________________ test_blur_filter_images[cat-3] ________________________
+
+fname = 'cat', ker_size = 3
+
+    @pytest.mark.parametrize("ker_size", [3, 5])
+    @pytest.mark.parametrize("fname", ['cat', 'mushroom'])
+    def test_blur_filter_images(fname, ker_size):
+        inpfile = os.path.join(TEST_DIRECTORY, 'test_images', f'{fname}.png')
+        expfile = os.path.join(TEST_DIRECTORY, 'test_results', f'{fname}_blurred{ker_size}.png')
+        im = lab.load_color_image(inpfile)
+        oim = object_hash(im)
+>       blur_filter = lab.make_blur_filter(ker_size)
+
+test.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 3
+
+    def make_blur_filter(n):
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:61: NotImplementedError
+________________________ test_blur_filter_images[cat-5] ________________________
+
+fname = 'cat', ker_size = 5
+
+    @pytest.mark.parametrize("ker_size", [3, 5])
+    @pytest.mark.parametrize("fname", ['cat', 'mushroom'])
+    def test_blur_filter_images(fname, ker_size):
+        inpfile = os.path.join(TEST_DIRECTORY, 'test_images', f'{fname}.png')
+        expfile = os.path.join(TEST_DIRECTORY, 'test_results', f'{fname}_blurred{ker_size}.png')
+        im = lab.load_color_image(inpfile)
+        oim = object_hash(im)
+>       blur_filter = lab.make_blur_filter(ker_size)
+
+test.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 5
+
+    def make_blur_filter(n):
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:61: NotImplementedError
+_____________________ test_blur_filter_images[mushroom-3] ______________________
+
+fname = 'mushroom', ker_size = 3
+
+    @pytest.mark.parametrize("ker_size", [3, 5])
+    @pytest.mark.parametrize("fname", ['cat', 'mushroom'])
+    def test_blur_filter_images(fname, ker_size):
+        inpfile = os.path.join(TEST_DIRECTORY, 'test_images', f'{fname}.png')
+        expfile = os.path.join(TEST_DIRECTORY, 'test_results', f'{fname}_blurred{ker_size}.png')
+        im = lab.load_color_image(inpfile)
+        oim = object_hash(im)
+>       blur_filter = lab.make_blur_filter(ker_size)
+
+test.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 3
+
+    def make_blur_filter(n):
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:61: NotImplementedError
+_____________________ test_blur_filter_images[mushroom-5] ______________________
+
+fname = 'mushroom', ker_size = 5
+
+    @pytest.mark.parametrize("ker_size", [3, 5])
+    @pytest.mark.parametrize("fname", ['cat', 'mushroom'])
+    def test_blur_filter_images(fname, ker_size):
+        inpfile = os.path.join(TEST_DIRECTORY, 'test_images', f'{fname}.png')
+        expfile = os.path.join(TEST_DIRECTORY, 'test_results', f'{fname}_blurred{ker_size}.png')
+        im = lab.load_color_image(inpfile)
+        oim = object_hash(im)
+>       blur_filter = lab.make_blur_filter(ker_size)
+
+test.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 5
+
+    def make_blur_filter(n):
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:61: NotImplementedError
+___________________ test_sharpen_filter_images[construct-3] ____________________
+
+fname = 'construct', ker_size = 3
+
+    @pytest.mark.parametrize("ker_size", [3, 5])
+    @pytest.mark.parametrize("fname", ['construct', 'bluegill'])
+    def test_sharpen_filter_images(fname, ker_size):
+        inpfile = os.path.join(TEST_DIRECTORY, 'test_images', f'{fname}.png')
+        expfile = os.path.join(TEST_DIRECTORY, 'test_results', f'{fname}_sharpened{ker_size}.png')
+        im = lab.load_color_image(inpfile)
+        oim = object_hash(im)
+>       sharpen_filter = lab.make_sharpen_filter(ker_size)
+
+test.py:172: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 3
+
+    def make_sharpen_filter(n):
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:65: NotImplementedError
+___________________ test_sharpen_filter_images[construct-5] ____________________
+
+fname = 'construct', ker_size = 5
+
+    @pytest.mark.parametrize("ker_size", [3, 5])
+    @pytest.mark.parametrize("fname", ['construct', 'bluegill'])
+    def test_sharpen_filter_images(fname, ker_size):
+        inpfile = os.path.join(TEST_DIRECTORY, 'test_images', f'{fname}.png')
+        expfile = os.path.join(TEST_DIRECTORY, 'test_results', f'{fname}_sharpened{ker_size}.png')
+        im = lab.load_color_image(inpfile)
+        oim = object_hash(im)
+>       sharpen_filter = lab.make_sharpen_filter(ker_size)
+
+test.py:172: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 5
+
+    def make_sharpen_filter(n):
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:65: NotImplementedError
+____________________ test_sharpen_filter_images[bluegill-3] ____________________
+
+fname = 'bluegill', ker_size = 3
+
+    @pytest.mark.parametrize("ker_size", [3, 5])
+    @pytest.mark.parametrize("fname", ['construct', 'bluegill'])
+    def test_sharpen_filter_images(fname, ker_size):
+        inpfile = os.path.join(TEST_DIRECTORY, 'test_images', f'{fname}.png')
+        expfile = os.path.join(TEST_DIRECTORY, 'test_results', f'{fname}_sharpened{ker_size}.png')
+        im = lab.load_color_image(inpfile)
+        oim = object_hash(im)
+>       sharpen_filter = lab.make_sharpen_filter(ker_size)
+
+test.py:172: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 3
+
+    def make_sharpen_filter(n):
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:65: NotImplementedError
+____________________ test_sharpen_filter_images[bluegill-5] ____________________
+
+fname = 'bluegill', ker_size = 5
+
+    @pytest.mark.parametrize("ker_size", [3, 5])
+    @pytest.mark.parametrize("fname", ['construct', 'bluegill'])
+    def test_sharpen_filter_images(fname, ker_size):
+        inpfile = os.path.join(TEST_DIRECTORY, 'test_images', f'{fname}.png')
+        expfile = os.path.join(TEST_DIRECTORY, 'test_results', f'{fname}_sharpened{ker_size}.png')
+        im = lab.load_color_image(inpfile)
+        oim = object_hash(im)
+>       sharpen_filter = lab.make_sharpen_filter(ker_size)
+
+test.py:172: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 5
+
+    def make_sharpen_filter(n):
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:65: NotImplementedError
+______________________________ test_small_cascade ______________________________
+
+    def test_small_cascade():
+        color_edges = lab.color_filter_from_greyscale_filter(lab.edges)
+        color_inverted = lab.color_filter_from_greyscale_filter(lab.inverted)
+>       color_blur_5 = lab.color_filter_from_greyscale_filter(lab.make_blur_filter(5))
+
+test.py:184: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 5
+
+    def make_blur_filter(n):
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:61: NotImplementedError
+____________________________ test_cascades[tree-0] _____________________________
+
+cascade = 0, image = 'tree'
+
+    @pytest.mark.parametrize("cascade", [0, 1, 2])
+    @pytest.mark.parametrize("image", ['tree', 'stronger'])
+    def test_cascades(cascade, image):
+        color_edges = lab.color_filter_from_greyscale_filter(lab.edges)
+        color_inverted = lab.color_filter_from_greyscale_filter(lab.inverted)
+        cascade0 = [color_edges,
+>                   lab.color_filter_from_greyscale_filter(lab.make_sharpen_filter(3))]
+
+test.py:214: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 3
+
+    def make_sharpen_filter(n):
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:65: NotImplementedError
+____________________________ test_cascades[tree-1] _____________________________
+
+cascade = 1, image = 'tree'
+
+    @pytest.mark.parametrize("cascade", [0, 1, 2])
+    @pytest.mark.parametrize("image", ['tree', 'stronger'])
+    def test_cascades(cascade, image):
+        color_edges = lab.color_filter_from_greyscale_filter(lab.edges)
+        color_inverted = lab.color_filter_from_greyscale_filter(lab.inverted)
+        cascade0 = [color_edges,
+>                   lab.color_filter_from_greyscale_filter(lab.make_sharpen_filter(3))]
+
+test.py:214: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 3
+
+    def make_sharpen_filter(n):
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:65: NotImplementedError
+____________________________ test_cascades[tree-2] _____________________________
+
+cascade = 2, image = 'tree'
+
+    @pytest.mark.parametrize("cascade", [0, 1, 2])
+    @pytest.mark.parametrize("image", ['tree', 'stronger'])
+    def test_cascades(cascade, image):
+        color_edges = lab.color_filter_from_greyscale_filter(lab.edges)
+        color_inverted = lab.color_filter_from_greyscale_filter(lab.inverted)
+        cascade0 = [color_edges,
+>                   lab.color_filter_from_greyscale_filter(lab.make_sharpen_filter(3))]
+
+test.py:214: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 3
+
+    def make_sharpen_filter(n):
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:65: NotImplementedError
+__________________________ test_cascades[stronger-0] ___________________________
+
+cascade = 0, image = 'stronger'
+
+    @pytest.mark.parametrize("cascade", [0, 1, 2])
+    @pytest.mark.parametrize("image", ['tree', 'stronger'])
+    def test_cascades(cascade, image):
+        color_edges = lab.color_filter_from_greyscale_filter(lab.edges)
+        color_inverted = lab.color_filter_from_greyscale_filter(lab.inverted)
+        cascade0 = [color_edges,
+>                   lab.color_filter_from_greyscale_filter(lab.make_sharpen_filter(3))]
+
+test.py:214: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 3
+
+    def make_sharpen_filter(n):
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:65: NotImplementedError
+__________________________ test_cascades[stronger-1] ___________________________
+
+cascade = 1, image = 'stronger'
+
+    @pytest.mark.parametrize("cascade", [0, 1, 2])
+    @pytest.mark.parametrize("image", ['tree', 'stronger'])
+    def test_cascades(cascade, image):
+        color_edges = lab.color_filter_from_greyscale_filter(lab.edges)
+        color_inverted = lab.color_filter_from_greyscale_filter(lab.inverted)
+        cascade0 = [color_edges,
+>                   lab.color_filter_from_greyscale_filter(lab.make_sharpen_filter(3))]
+
+test.py:214: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 3
+
+    def make_sharpen_filter(n):
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:65: NotImplementedError
+__________________________ test_cascades[stronger-2] ___________________________
+
+cascade = 2, image = 'stronger'
+
+    @pytest.mark.parametrize("cascade", [0, 1, 2])
+    @pytest.mark.parametrize("image", ['tree', 'stronger'])
+    def test_cascades(cascade, image):
+        color_edges = lab.color_filter_from_greyscale_filter(lab.edges)
+        color_inverted = lab.color_filter_from_greyscale_filter(lab.inverted)
+        cascade0 = [color_edges,
+>                   lab.color_filter_from_greyscale_filter(lab.make_sharpen_filter(3))]
+
+test.py:214: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 3
+
+    def make_sharpen_filter(n):
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:65: NotImplementedError
+__________________________ test_seamcarving_images_1 ___________________________
+
+    def test_seamcarving_images_1():
+>       seams_one(('pattern', 'smallfrog'))
+
+test.py:263: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test.py:255: in seams_one
+    result = lab.seam_carving(im, 1)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image = {'height': 4, 'pixels': [(71, 255, 255), (114, 200, 71), (114, 200, 71), (114, 200, 71), (100, 200, 50), (114, 200, 71), ...], 'width': 9}
+ncols = 1
+
+    def seam_carving(image, ncols):
+        """
+        Starting from the given image, use the seam carving technique to remove
+        ncols (an integer) columns from the image.
+        """
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:86: NotImplementedError
+__________________________ test_seamcarving_images_2 ___________________________
+
+    def test_seamcarving_images_2():
+>       seams_one(('bluegill', 'tree', 'twocats'))
+
+test.py:267: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test.py:255: in seams_one
+    result = lab.seam_carving(im, 1)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image = {'height': 220, 'pixels': [(73, 131, 117), (71, 129, 115), (75, 129, 115), (75, 129, 115), (76, 130, 117), (76, 130, 117), ...], 'width': 300}
+ncols = 1
+
+    def seam_carving(image, ncols):
+        """
+        Starting from the given image, use the seam carving technique to remove
+        ncols (an integer) columns from the image.
+        """
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:86: NotImplementedError
+________________________ test_seamcarving_centeredpixel ________________________
+
+    def test_seamcarving_centeredpixel():
+>       seams_endtoend('centered_pixel.png', 'seams_centered_pixel', 11)
+
+test.py:271: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test.py:242: in seams_endtoend
+    result = lab.seam_carving(im, i)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image = {'height': 11, 'pixels': [(244, 173, 198), (244, 173, 198), (244, 173, 198), (244, 173, 198), (244, 173, 198), (244, 173, 198), ...], 'width': 11}
+ncols = 1
+
+    def seam_carving(image, ncols):
+        """
+        Starting from the given image, use the seam carving technique to remove
+        ncols (an integer) columns from the image.
+        """
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:86: NotImplementedError
+___________________________ test_seamcarving_pattern ___________________________
+
+    def test_seamcarving_pattern():
+>       seams_endtoend('pattern.png', 'seams_pattern', 9)
+
+test.py:275: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test.py:242: in seams_endtoend
+    result = lab.seam_carving(im, i)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image = {'height': 4, 'pixels': [(71, 255, 255), (114, 200, 71), (114, 200, 71), (114, 200, 71), (100, 200, 50), (114, 200, 71), ...], 'width': 9}
+ncols = 1
+
+    def seam_carving(image, ncols):
+        """
+        Starting from the given image, use the seam carving technique to remove
+        ncols (an integer) columns from the image.
+        """
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:86: NotImplementedError
+__________________________ test_seamcarving_smallfrog __________________________
+
+    def test_seamcarving_smallfrog():
+>       seams_endtoend('smallfrog.png', 'seams_smallfrog', 31)
+
+test.py:279: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test.py:242: in seams_endtoend
+    result = lab.seam_carving(im, i)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image = {'height': 37, 'pixels': [(168, 116, 79), (158, 107, 73), (133, 87, 58), (121, 76, 45), (131, 80, 42), (134, 81, 42), ...], 'width': 50}
+ncols = 1
+
+    def seam_carving(image, ncols):
+        """
+        Starting from the given image, use the seam carving technique to remove
+        ncols (an integer) columns from the image.
+        """
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:86: NotImplementedError
+__________________________ test_seamcarving_mushroom ___________________________
+
+    def test_seamcarving_mushroom():
+>       seams_endtoend('smallmushroom.png', 'seams_mushroom', 47)
+
+test.py:283: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test.py:242: in seams_endtoend
+    result = lab.seam_carving(im, i)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+image = {'height': 30, 'pixels': [(4, 2, 1), (6, 5, 3), (12, 11, 6), (21, 23, 9), (29, 37, 14), (36, 51, 16), ...], 'width': 48}
+ncols = 1
+
+    def seam_carving(image, ncols):
+        """
+        Starting from the given image, use the seam carving technique to remove
+        ncols (an integer) columns from the image.
+        """
+>       raise NotImplementedError
+E       NotImplementedError
+
+lab.py:86: NotImplementedError
+========================= 28 failed, 1 passed in 1.37s =========================
